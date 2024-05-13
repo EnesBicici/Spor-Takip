@@ -1,10 +1,13 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLineEdit
 from PyQt5 import QtGui
 from giris_ui import Ui_MainWindow
 from spor import Sporcu
 from ana import AnaSayfa
 from kayit import KayitSayfa
 from veritabani import Veritabani
+from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QShortcut
+from PyQt5.QtCore import Qt
 
 class arayuz(QMainWindow):
     def __init__(self) -> None:
@@ -16,6 +19,10 @@ class arayuz(QMainWindow):
         kayitsayfa = KayitSayfa()
         self.qtprogram.kayitButon.clicked.connect(lambda: kayitsayfa.show())
         kayitsayfa.kayit_sinyal.connect(self.kayitol)
+        shortcut = QShortcut(QKeySequence("Return"), self)
+        shortcut.activated.connect(self.girisyap)
+        self.qtprogram.girisButon.setFocusPolicy(Qt.StrongFocus)
+        self.qtprogram.sifreLine.setEchoMode(QLineEdit.Password)
 
     def girisyap(self):
         kullaniciadi = self.qtprogram.adLine.text()
